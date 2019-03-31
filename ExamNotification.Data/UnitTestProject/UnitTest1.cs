@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ExamNotification.Data;
 using ExamNotification.Data.Repositories;
+using ExamNotification.Model;
 namespace UnitTestProject
 {
     [TestClass]
@@ -18,7 +19,7 @@ namespace UnitTestProject
             _Repository.Dispose();
         }*/
 
-        [TestMethod]
+        /*[TestMethod]
         public void alterarCurso()
         {
             Curso oCurso = new Curso();
@@ -28,6 +29,23 @@ namespace UnitTestProject
             RepositoryCurso _Repository = new RepositoryCurso();
             _Repository.Alterar(oCurso);
             _Repository.Dispose();
+        }*/
+
+        [TestMethod]
+        public void Teste_EnvioEmail()
+        {
+            SendNotification oAviso = new SendNotification();
+            try
+            {
+                oAviso.Send();
+                Assert.IsTrue(true, "teste bem sucediso");
+            }
+            catch (Exception ex)
+            {
+                Assert.IsTrue(false, ex.Message);
+            }
+
+
         }
     }
 }

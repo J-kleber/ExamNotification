@@ -1,34 +1,53 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ProjetoNotificacaoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="ProjetoNotificacaoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Alunos" EntityType="ProjetoNotificacaoModel.Alunos" />
+    <EntitySet Name="Curso" EntityType="ProjetoNotificacaoModel.Curso" />
+    <EntitySet Name="Disciplinas" EntityType="ProjetoNotificacaoModel.Disciplinas" />
+    <EntitySet Name="ProvasTrabalhos" EntityType="ProjetoNotificacaoModel.ProvasTrabalhos" />
+    <EntitySet Name="sysdiagrams" EntityType="ProjetoNotificacaoModel.sysdiagrams" />
+    <AssociationSet Name="FK_Alunos_Curso" Association="ProjetoNotificacaoModel.FK_Alunos_Curso">
+      <End Role="Curso" EntitySet="Curso" />
+      <End Role="Alunos" EntitySet="Alunos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Disciplinas_Curso" Association="ProjetoNotificacaoModel.FK_Disciplinas_Curso">
+      <End Role="Curso" EntitySet="Curso" />
+      <End Role="Disciplinas" EntitySet="Disciplinas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProvasTrabalhos_Disciplinas" Association="ProjetoNotificacaoModel.FK_ProvasTrabalhos_Disciplinas">
+      <End Role="Disciplinas" EntitySet="Disciplinas" />
+      <End Role="ProvasTrabalhos" EntitySet="ProvasTrabalhos" />
+    </AssociationSet>
+  </EntityContainer>
   <EntityType Name="Alunos">
     <Key>
       <PropertyRef Name="Matricula" />
     </Key>
     <Property Name="Matricula" Type="Int32" Nullable="false" />
-    <Property Name="Nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nome" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="Id_curso" Type="Int32" Nullable="false" />
-    <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
-    <NavigationProperty Name="Curso" Relationship="Self.FK_Alunos_Curso" FromRole="Alunos" ToRole="Curso" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Curso" Relationship="ProjetoNotificacaoModel.FK_Alunos_Curso" FromRole="Alunos" ToRole="Curso" />
   </EntityType>
   <EntityType Name="Curso">
     <Key>
       <PropertyRef Name="Codigo" />
     </Key>
     <Property Name="Codigo" Type="Int32" Nullable="false" />
-    <Property Name="Nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nome" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="Duracao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-    <NavigationProperty Name="Alunos" Relationship="Self.FK_Alunos_Curso" FromRole="Curso" ToRole="Alunos" />
-    <NavigationProperty Name="Disciplinas" Relationship="Self.FK_Disciplinas_Curso" FromRole="Curso" ToRole="Disciplinas" />
+    <NavigationProperty Name="Alunos" Relationship="ProjetoNotificacaoModel.FK_Alunos_Curso" FromRole="Curso" ToRole="Alunos" />
+    <NavigationProperty Name="Disciplinas" Relationship="ProjetoNotificacaoModel.FK_Disciplinas_Curso" FromRole="Curso" ToRole="Disciplinas" />
   </EntityType>
   <EntityType Name="Disciplinas">
     <Key>
       <PropertyRef Name="Codigo" />
     </Key>
     <Property Name="Codigo" Type="Int32" Nullable="false" />
-    <Property Name="Nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nome" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="Codigo_Curso" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Curso" Relationship="Self.FK_Disciplinas_Curso" FromRole="Disciplinas" ToRole="Curso" />
-    <NavigationProperty Name="ProvasTrabalhos" Relationship="Self.FK_ProvasTrabalhos_Disciplinas" FromRole="Disciplinas" ToRole="ProvasTrabalhos" />
+    <NavigationProperty Name="Curso" Relationship="ProjetoNotificacaoModel.FK_Disciplinas_Curso" FromRole="Disciplinas" ToRole="Curso" />
+    <NavigationProperty Name="ProvasTrabalhos" Relationship="ProjetoNotificacaoModel.FK_ProvasTrabalhos_Disciplinas" FromRole="Disciplinas" ToRole="ProvasTrabalhos" />
   </EntityType>
   <EntityType Name="ProvasTrabalhos">
     <Key>
@@ -36,15 +55,25 @@
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" />
     <Property Name="Id_disciplina" Type="Int32" Nullable="false" />
-    <Property Name="Nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Nome" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="Descricao" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="Data_final" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="Data_aviso" Type="DateTime" Nullable="false" Precision="0" />
-    <NavigationProperty Name="Disciplinas" Relationship="Self.FK_ProvasTrabalhos_Disciplinas" FromRole="ProvasTrabalhos" ToRole="Disciplinas" />
+    <NavigationProperty Name="Disciplinas" Relationship="ProjetoNotificacaoModel.FK_ProvasTrabalhos_Disciplinas" FromRole="ProvasTrabalhos" ToRole="Disciplinas" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
   </EntityType>
   <Association Name="FK_Alunos_Curso">
-    <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
-    <End Role="Alunos" Type="Self.Alunos" Multiplicity="*" />
+    <End Type="ProjetoNotificacaoModel.Curso" Role="Curso" Multiplicity="1" />
+    <End Type="ProjetoNotificacaoModel.Alunos" Role="Alunos" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Curso">
         <PropertyRef Name="Codigo" />
@@ -55,8 +84,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Disciplinas_Curso">
-    <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
-    <End Role="Disciplinas" Type="Self.Disciplinas" Multiplicity="*" />
+    <End Type="ProjetoNotificacaoModel.Curso" Role="Curso" Multiplicity="1" />
+    <End Type="ProjetoNotificacaoModel.Disciplinas" Role="Disciplinas" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Curso">
         <PropertyRef Name="Codigo" />
@@ -67,8 +96,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_ProvasTrabalhos_Disciplinas">
-    <End Role="Disciplinas" Type="Self.Disciplinas" Multiplicity="1" />
-    <End Role="ProvasTrabalhos" Type="Self.ProvasTrabalhos" Multiplicity="*" />
+    <End Type="ProjetoNotificacaoModel.Disciplinas" Role="Disciplinas" Multiplicity="1" />
+    <End Type="ProjetoNotificacaoModel.ProvasTrabalhos" Role="ProvasTrabalhos" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Disciplinas">
         <PropertyRef Name="Codigo" />
@@ -78,22 +107,4 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="ProjetoNotificacaoEntities" annotation:LazyLoadingEnabled="true">
-    <EntitySet Name="Alunos" EntityType="Self.Alunos" />
-    <EntitySet Name="Curso" EntityType="Self.Curso" />
-    <EntitySet Name="Disciplinas" EntityType="Self.Disciplinas" />
-    <EntitySet Name="ProvasTrabalhos" EntityType="Self.ProvasTrabalhos" />
-    <AssociationSet Name="FK_Alunos_Curso" Association="Self.FK_Alunos_Curso">
-      <End Role="Curso" EntitySet="Curso" />
-      <End Role="Alunos" EntitySet="Alunos" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Disciplinas_Curso" Association="Self.FK_Disciplinas_Curso">
-      <End Role="Curso" EntitySet="Curso" />
-      <End Role="Disciplinas" EntitySet="Disciplinas" />
-    </AssociationSet>
-    <AssociationSet Name="FK_ProvasTrabalhos_Disciplinas" Association="Self.FK_ProvasTrabalhos_Disciplinas">
-      <End Role="Disciplinas" EntitySet="Disciplinas" />
-      <End Role="ProvasTrabalhos" EntitySet="ProvasTrabalhos" />
-    </AssociationSet>
-  </EntityContainer>
 </Schema>

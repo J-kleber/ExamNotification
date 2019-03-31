@@ -67,6 +67,10 @@
       <Project>{31623310-5350-403e-aced-2203ab6fa025}</Project>
       <Name>ExamNotification.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ExamNotification.Model\ExamNotification.Model.csproj">
+      <Project>{74a1259f-9f03-43b9-b9fb-ab78906dfaba}</Project>
+      <Name>ExamNotification.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

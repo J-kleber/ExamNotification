@@ -29,5 +29,6 @@ namespace ExamNotification.Data
         public virtual DbSet<Curso> Curso { get; set; }
         public virtual DbSet<Disciplinas> Disciplinas { get; set; }
         public virtual DbSet<ProvasTrabalhos> ProvasTrabalhos { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
     }
 }

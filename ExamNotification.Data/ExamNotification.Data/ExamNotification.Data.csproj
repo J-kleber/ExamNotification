@@ -87,6 +87,9 @@
     <Compile Include="Repositories\RepositoryCurso.cs" />
     <Compile Include="Repositories\RepositoryDisciplina.cs" />
     <Compile Include="Repositories\RepositoryProvaTrabalho.cs" />
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />

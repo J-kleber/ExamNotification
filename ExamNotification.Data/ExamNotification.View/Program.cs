@@ -16,7 +16,7 @@ namespace ExamNotification.View
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmCurso());
+            Application.Run(new frmEvento());
         }
     }
 }

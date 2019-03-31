@@ -23,3 +23,8 @@ c:\users\t-gamer\source\repos\ExamNotification.Data\UnitTestProject\obj\Debug\Un
 c:\users\t-gamer\source\repos\ExamNotification.Data\UnitTestProject\obj\Debug\UnitTestProject.csproj.CopyComplete
 c:\users\t-gamer\source\repos\ExamNotification.Data\UnitTestProject\obj\Debug\UnitTestProject.dll
 c:\users\t-gamer\source\repos\ExamNotification.Data\UnitTestProject\obj\Debug\UnitTestProject.pdb
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\UnitTestProject\bin\Debug\ExamNotification.Model.dll
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\UnitTestProject\bin\Debug\ExamNotification.Controller.dll
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\UnitTestProject\bin\Debug\ExamNotification.Model.pdb
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\UnitTestProject\bin\Debug\ExamNotification.Controller.pdb
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\UnitTestProject\bin\Debug\ExamNotification.Model.dll.config

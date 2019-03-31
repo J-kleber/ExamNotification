@@ -1,0 +1,17 @@
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\ExamNotification.Model\bin\Debug\ExamNotification.Model.dll
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\ExamNotification.Model\bin\Debug\ExamNotification.Model.pdb
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\ExamNotification.Model\bin\Debug\ExamNotification.Controller.dll
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\ExamNotification.Model\bin\Debug\ExamNotification.Data.dll
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\ExamNotification.Model\bin\Debug\EntityFramework.dll
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\ExamNotification.Model\bin\Debug\ExamNotification.Controller.pdb
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\ExamNotification.Model\bin\Debug\ExamNotification.Data.pdb
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\ExamNotification.Model\bin\Debug\ExamNotification.Data.dll.config
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\ExamNotification.Model\bin\Debug\EntityFramework.xml
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\ExamNotification.Model\obj\Debug\ExamNotification.Model.csprojAssemblyReference.cache
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\ExamNotification.Model\obj\Debug\ExamNotification.Model.csproj.CoreCompileInputs.cache
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\ExamNotification.Model\obj\Debug\ExamNotification.Model.csproj.CopyComplete
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\ExamNotification.Model\obj\Debug\ExamNotification.Model.dll
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\ExamNotification.Model\obj\Debug\ExamNotification.Model.pdb
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\ExamNotification.Model\bin\Debug\ExamNotification.Model.dll.config
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\ExamNotification.Model\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\T-Gamer\source\repos\ExamNotification.Data\ExamNotification.Model\bin\Debug\EntityFramework.SqlServer.xml
