@@ -1,0 +1,93 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProjetoNotificacaoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Alunos">
+    <Key>
+      <PropertyRef Name="Matricula" />
+    </Key>
+    <Property Name="Matricula" Type="int" Nullable="false" />
+    <Property Name="Nome" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Id_curso" Type="int" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="255" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Curso">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="int" Nullable="false" />
+    <Property Name="Nome" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Duracao" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Disciplinas">
+    <Key>
+      <PropertyRef Name="Codigo" />
+    </Key>
+    <Property Name="Codigo" Type="int" Nullable="false" />
+    <Property Name="Nome" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Codigo_Curso" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProvasTrabalhos">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="Id_disciplina" Type="int" Nullable="false" />
+    <Property Name="Nome" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="Descricao" Type="varchar" MaxLength="255" />
+    <Property Name="Data_final" Type="date" Nullable="false" />
+    <Property Name="Data_aviso" Type="date" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Alunos_Curso">
+    <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+    <End Role="Alunos" Type="Self.Alunos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Curso">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Alunos">
+        <PropertyRef Name="Id_curso" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Disciplinas_Curso">
+    <End Role="Curso" Type="Self.Curso" Multiplicity="1" />
+    <End Role="Disciplinas" Type="Self.Disciplinas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Curso">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="Disciplinas">
+        <PropertyRef Name="Codigo_Curso" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProvasTrabalhos_Disciplinas">
+    <End Role="Disciplinas" Type="Self.Disciplinas" Multiplicity="1" />
+    <End Role="ProvasTrabalhos" Type="Self.ProvasTrabalhos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Disciplinas">
+        <PropertyRef Name="Codigo" />
+      </Principal>
+      <Dependent Role="ProvasTrabalhos">
+        <PropertyRef Name="Id_disciplina" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ProjetoNotificacaoModelStoreContainer">
+    <EntitySet Name="Alunos" EntityType="Self.Alunos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Curso" EntityType="Self.Curso" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Disciplinas" EntityType="Self.Disciplinas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProvasTrabalhos" EntityType="Self.ProvasTrabalhos" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Alunos_Curso" Association="Self.FK_Alunos_Curso">
+      <End Role="Curso" EntitySet="Curso" />
+      <End Role="Alunos" EntitySet="Alunos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Disciplinas_Curso" Association="Self.FK_Disciplinas_Curso">
+      <End Role="Curso" EntitySet="Curso" />
+      <End Role="Disciplinas" EntitySet="Disciplinas" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProvasTrabalhos_Disciplinas" Association="Self.FK_ProvasTrabalhos_Disciplinas">
+      <End Role="Disciplinas" EntitySet="Disciplinas" />
+      <End Role="ProvasTrabalhos" EntitySet="ProvasTrabalhos" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

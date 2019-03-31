@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ProjetoNotificacaoModelStoreContainer" CdmEntityContainer="ProjetoNotificacaoEntities">
+    <EntitySetMapping Name="Alunos">
+      <EntityTypeMapping TypeName="ProjetoNotificacaoModel.Alunos">
+        <MappingFragment StoreEntitySet="Alunos">
+          <ScalarProperty Name="Matricula" ColumnName="Matricula" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Id_curso" ColumnName="Id_curso" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Curso">
+      <EntityTypeMapping TypeName="ProjetoNotificacaoModel.Curso">
+        <MappingFragment StoreEntitySet="Curso">
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Duracao" ColumnName="Duracao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Disciplinas">
+      <EntityTypeMapping TypeName="ProjetoNotificacaoModel.Disciplinas">
+        <MappingFragment StoreEntitySet="Disciplinas">
+          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Codigo_Curso" ColumnName="Codigo_Curso" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProvasTrabalhos">
+      <EntityTypeMapping TypeName="ProjetoNotificacaoModel.ProvasTrabalhos">
+        <MappingFragment StoreEntitySet="ProvasTrabalhos">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Id_disciplina" ColumnName="Id_disciplina" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+          <ScalarProperty Name="Data_final" ColumnName="Data_final" />
+          <ScalarProperty Name="Data_aviso" ColumnName="Data_aviso" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
