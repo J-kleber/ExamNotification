@@ -1,0 +1,43 @@
+﻿@model Torneio.model.Times
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalhes</h2>
+
+<div>
+    <h4>Times</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Emblema)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Emblema)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sigla)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sigla)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.ID }, htmlAttributes: new { @class = "btn btn-warning   " })
+    <br />
+    @Html.ActionLink("Voltar a lista", "Index")
+</p>

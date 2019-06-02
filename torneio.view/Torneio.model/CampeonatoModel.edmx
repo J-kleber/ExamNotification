@@ -1,0 +1,657 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TorneioModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'Torneio.dbo.Escalacoes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Escalacoes">
+          <Key>
+            <PropertyRef Name="IDTime" />
+            <PropertyRef Name="IDPartida" />
+            <PropertyRef Name="IDJogador" />
+            <PropertyRef Name="Titular" />
+            <PropertyRef Name="Posicao" />
+          </Key>
+          <Property Name="IDTime" Type="int" Nullable="false" />
+          <Property Name="IDPartida" Type="int" Nullable="false" />
+          <Property Name="IDJogador" Type="int" Nullable="false" />
+          <Property Name="Titular" Type="bit" Nullable="false" />
+          <Property Name="Posicao" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Jogadores">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Idade" Type="int" Nullable="false" />
+          <Property Name="Nacionalidade" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DataNascimento" Type="date" Nullable="false" />
+          <Property Name="IDTime" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Partidas">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IDTorneio" Type="int" Nullable="false" />
+          <Property Name="IDTime1" Type="int" Nullable="false" />
+          <Property Name="IDTime2" Type="int" Nullable="false" />
+          <Property Name="Rodada" Type="int" Nullable="false" />
+          <Property Name="PlacarTime1" Type="int" Nullable="false" />
+          <Property Name="PlacarTime2" Type="int" Nullable="false" />
+          <Property Name="DataHora" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Times">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Emblema" Type="varchar" MaxLength="255" />
+          <Property Name="Sigla" Type="varchar" MaxLength="3" />
+        </EntityType>
+        <EntityType Name="Torneios">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Premiacao" Type="varchar(max)" Nullable="false" />
+          <Property Name="Ano" Type="int" Nullable="false" />
+          <Property Name="Realizador" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Torneios_Times">
+          <Key>
+            <PropertyRef Name="IDTorneio" />
+            <PropertyRef Name="IDTime" />
+          </Key>
+          <Property Name="IDTorneio" Type="int" Nullable="false" />
+          <Property Name="IDTime" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Senha" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Ativo" Type="varchar" MaxLength="2" />
+          <Property Name="Nome" Type="varchar" MaxLength="100" />
+          <Property Name="Sobrenome" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="usuarios_torneios">
+          <Key>
+            <PropertyRef Name="IDUsuario" />
+            <PropertyRef Name="IDTorneio" />
+          </Key>
+          <Property Name="IDUsuario" Type="int" Nullable="false" />
+          <Property Name="IDTorneio" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Escalacoes_Jogadores">
+          <End Role="Jogadores" Type="Self.Jogadores" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Escalacoes" Type="Self.Escalacoes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jogadores">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Escalacoes">
+              <PropertyRef Name="IDTime" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Escalacoes_Partidas">
+          <End Role="Partidas" Type="Self.Partidas" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Escalacoes" Type="Self.Escalacoes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Partidas">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Escalacoes">
+              <PropertyRef Name="IDPartida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Escalacoes_Times">
+          <End Role="Times" Type="Self.Times" Multiplicity="1" />
+          <End Role="Escalacoes" Type="Self.Escalacoes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Times">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Escalacoes">
+              <PropertyRef Name="IDTime" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Jogadores_Times">
+          <End Role="Times" Type="Self.Times" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Jogadores" Type="Self.Jogadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Times">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Jogadores">
+              <PropertyRef Name="IDTime" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partidas_Times">
+          <End Role="Times" Type="Self.Times" Multiplicity="1" />
+          <End Role="Partidas" Type="Self.Partidas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Times">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Partidas">
+              <PropertyRef Name="IDTime1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partidas_Times1">
+          <End Role="Times" Type="Self.Times" Multiplicity="1" />
+          <End Role="Partidas" Type="Self.Partidas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Times">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Partidas">
+              <PropertyRef Name="IDTime2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partidas_Torneios">
+          <End Role="Torneios" Type="Self.Torneios" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Partidas" Type="Self.Partidas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Torneios">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Partidas">
+              <PropertyRef Name="IDTorneio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Torneios_Times_Times">
+          <End Role="Times" Type="Self.Times" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Torneios_Times" Type="Self.Torneios_Times" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Times">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Torneios_Times">
+              <PropertyRef Name="IDTime" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Torneios_Times_Torneios">
+          <End Role="Torneios" Type="Self.Torneios" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Torneios_Times" Type="Self.Torneios_Times" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Torneios">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Torneios_Times">
+              <PropertyRef Name="IDTorneio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuarios_torneios_Torneios">
+          <End Role="Torneios" Type="Self.Torneios" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="usuarios_torneios" Type="Self.usuarios_torneios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Torneios">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="usuarios_torneios">
+              <PropertyRef Name="IDTorneio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_usuarios_torneios_Usuarios">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="usuarios_torneios" Type="Self.usuarios_torneios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="usuarios_torneios">
+              <PropertyRef Name="IDUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TorneioModelStoreContainer">
+          <EntitySet Name="Jogadores" EntityType="Self.Jogadores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Partidas" EntityType="Self.Partidas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Times" EntityType="Self.Times" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Torneios" EntityType="Self.Torneios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Torneios_Times" EntityType="Self.Torneios_Times" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuarios_torneios" EntityType="Self.usuarios_torneios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Escalacoes" EntityType="Self.Escalacoes" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Escalacoes].[IDTime] AS [IDTime], 
+    [Escalacoes].[IDPartida] AS [IDPartida], 
+    [Escalacoes].[IDJogador] AS [IDJogador], 
+    [Escalacoes].[Titular] AS [Titular], 
+    [Escalacoes].[Posicao] AS [Posicao]
+    FROM [dbo].[Escalacoes] AS [Escalacoes]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Escalacoes_Jogadores" Association="Self.FK_Escalacoes_Jogadores">
+            <End Role="Jogadores" EntitySet="Jogadores" />
+            <End Role="Escalacoes" EntitySet="Escalacoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Escalacoes_Partidas" Association="Self.FK_Escalacoes_Partidas">
+            <End Role="Partidas" EntitySet="Partidas" />
+            <End Role="Escalacoes" EntitySet="Escalacoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Escalacoes_Times" Association="Self.FK_Escalacoes_Times">
+            <End Role="Times" EntitySet="Times" />
+            <End Role="Escalacoes" EntitySet="Escalacoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Jogadores_Times" Association="Self.FK_Jogadores_Times">
+            <End Role="Times" EntitySet="Times" />
+            <End Role="Jogadores" EntitySet="Jogadores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partidas_Times" Association="Self.FK_Partidas_Times">
+            <End Role="Times" EntitySet="Times" />
+            <End Role="Partidas" EntitySet="Partidas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partidas_Times1" Association="Self.FK_Partidas_Times1">
+            <End Role="Times" EntitySet="Times" />
+            <End Role="Partidas" EntitySet="Partidas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partidas_Torneios" Association="Self.FK_Partidas_Torneios">
+            <End Role="Torneios" EntitySet="Torneios" />
+            <End Role="Partidas" EntitySet="Partidas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Torneios_Times_Times" Association="Self.FK_Torneios_Times_Times">
+            <End Role="Times" EntitySet="Times" />
+            <End Role="Torneios_Times" EntitySet="Torneios_Times" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Torneios_Times_Torneios" Association="Self.FK_Torneios_Times_Torneios">
+            <End Role="Torneios" EntitySet="Torneios" />
+            <End Role="Torneios_Times" EntitySet="Torneios_Times" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuarios_torneios_Torneios" Association="Self.FK_usuarios_torneios_Torneios">
+            <End Role="Torneios" EntitySet="Torneios" />
+            <End Role="usuarios_torneios" EntitySet="usuarios_torneios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_usuarios_torneios_Usuarios" Association="Self.FK_usuarios_torneios_Usuarios">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="usuarios_torneios" EntitySet="usuarios_torneios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TorneioModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Jogadores">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Idade" Type="Int32" Nullable="false" />
+          <Property Name="Nacionalidade" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DataNascimento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IDTime" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Escalacoes" Relationship="Self.FK_Escalacoes_Jogadores" FromRole="Jogadores" ToRole="Escalacoes" />
+          <NavigationProperty Name="Times" Relationship="Self.FK_Jogadores_Times" FromRole="Jogadores" ToRole="Times" />
+        </EntityType>
+        <EntityType Name="Partidas">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IDTorneio" Type="Int32" Nullable="false" />
+          <Property Name="IDTime1" Type="Int32" Nullable="false" />
+          <Property Name="IDTime2" Type="Int32" Nullable="false" />
+          <Property Name="Rodada" Type="Int32" Nullable="false" />
+          <Property Name="PlacarTime1" Type="Int32" Nullable="false" />
+          <Property Name="PlacarTime2" Type="Int32" Nullable="false" />
+          <Property Name="DataHora" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Escalacoes" Relationship="Self.FK_Escalacoes_Partidas" FromRole="Partidas" ToRole="Escalacoes" />
+          <NavigationProperty Name="Times" Relationship="Self.FK_Partidas_Times" FromRole="Partidas" ToRole="Times" />
+          <NavigationProperty Name="Times1" Relationship="Self.FK_Partidas_Times1" FromRole="Partidas" ToRole="Times" />
+          <NavigationProperty Name="Torneios" Relationship="Self.FK_Partidas_Torneios" FromRole="Partidas" ToRole="Torneios" />
+        </EntityType>
+        <EntityType Name="Times">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Emblema" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Sigla" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Jogadores" Relationship="Self.FK_Jogadores_Times" FromRole="Times" ToRole="Jogadores" />
+          <NavigationProperty Name="Partidas" Relationship="Self.FK_Partidas_Times" FromRole="Times" ToRole="Partidas" />
+          <NavigationProperty Name="Partidas1" Relationship="Self.FK_Partidas_Times1" FromRole="Times" ToRole="Partidas" />
+          <NavigationProperty Name="Escalacoes" Relationship="Self.FK_Escalacoes_Times" FromRole="Times" ToRole="Escalacoes" />
+          <NavigationProperty Name="Torneios" Relationship="Self.Torneios_Times" FromRole="Times" ToRole="Torneios" />
+        </EntityType>
+        <EntityType Name="Torneios">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Premiacao" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ano" Type="Int32" Nullable="false" />
+          <Property Name="Realizador" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Partidas" Relationship="Self.FK_Partidas_Torneios" FromRole="Torneios" ToRole="Partidas" />
+          <NavigationProperty Name="Times" Relationship="Self.Torneios_Times" FromRole="Torneios" ToRole="Times" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.usuarios_torneios" FromRole="Torneios" ToRole="Usuarios" />
+        </EntityType>
+        <EntityType Name="Usuarios">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Senha" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Ativo" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="Nome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Sobrenome" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Torneios" Relationship="Self.usuarios_torneios" FromRole="Usuarios" ToRole="Torneios" />
+        </EntityType>
+        <EntityType Name="Escalacoes">
+          <Key>
+            <PropertyRef Name="IDTime" />
+            <PropertyRef Name="IDPartida" />
+            <PropertyRef Name="IDJogador" />
+            <PropertyRef Name="Titular" />
+            <PropertyRef Name="Posicao" />
+          </Key>
+          <Property Name="IDTime" Type="Int32" Nullable="false" />
+          <Property Name="IDPartida" Type="Int32" Nullable="false" />
+          <Property Name="IDJogador" Type="Int32" Nullable="false" />
+          <Property Name="Titular" Type="Boolean" Nullable="false" />
+          <Property Name="Posicao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Jogadores" Relationship="Self.FK_Escalacoes_Jogadores" FromRole="Escalacoes" ToRole="Jogadores" />
+          <NavigationProperty Name="Partidas" Relationship="Self.FK_Escalacoes_Partidas" FromRole="Escalacoes" ToRole="Partidas" />
+          <NavigationProperty Name="Times" Relationship="Self.FK_Escalacoes_Times" FromRole="Escalacoes" ToRole="Times" />
+        </EntityType>
+        <Association Name="FK_Escalacoes_Jogadores">
+          <End Role="Jogadores" Type="Self.Jogadores" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Escalacoes" Type="Self.Escalacoes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Jogadores">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Escalacoes">
+              <PropertyRef Name="IDTime" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Jogadores_Times">
+          <End Role="Times" Type="Self.Times" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Jogadores" Type="Self.Jogadores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Times">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Jogadores">
+              <PropertyRef Name="IDTime" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Escalacoes_Partidas">
+          <End Role="Partidas" Type="Self.Partidas" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Escalacoes" Type="Self.Escalacoes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Partidas">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Escalacoes">
+              <PropertyRef Name="IDPartida" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partidas_Times">
+          <End Role="Times" Type="Self.Times" Multiplicity="1" />
+          <End Role="Partidas" Type="Self.Partidas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Times">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Partidas">
+              <PropertyRef Name="IDTime1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partidas_Times1">
+          <End Role="Times" Type="Self.Times" Multiplicity="1" />
+          <End Role="Partidas" Type="Self.Partidas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Times">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Partidas">
+              <PropertyRef Name="IDTime2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partidas_Torneios">
+          <End Role="Torneios" Type="Self.Torneios" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Partidas" Type="Self.Partidas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Torneios">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Partidas">
+              <PropertyRef Name="IDTorneio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Escalacoes_Times">
+          <End Role="Times" Type="Self.Times" Multiplicity="1" />
+          <End Role="Escalacoes" Type="Self.Escalacoes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Times">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Escalacoes">
+              <PropertyRef Name="IDTime" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Torneios_Times">
+          <End Role="Times" Type="Self.Times" Multiplicity="*" />
+          <End Role="Torneios" Type="Self.Torneios" Multiplicity="*" />
+        </Association>
+        <Association Name="usuarios_torneios">
+          <End Role="Torneios" Type="Self.Torneios" Multiplicity="*" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="TorneioEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Jogadores" EntityType="Self.Jogadores" />
+          <EntitySet Name="Partidas" EntityType="Self.Partidas" />
+          <EntitySet Name="Times" EntityType="Self.Times" />
+          <EntitySet Name="Torneios" EntityType="Self.Torneios" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <EntitySet Name="Escalacoes" EntityType="Self.Escalacoes" />
+          <AssociationSet Name="FK_Escalacoes_Jogadores" Association="Self.FK_Escalacoes_Jogadores">
+            <End Role="Jogadores" EntitySet="Jogadores" />
+            <End Role="Escalacoes" EntitySet="Escalacoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Jogadores_Times" Association="Self.FK_Jogadores_Times">
+            <End Role="Times" EntitySet="Times" />
+            <End Role="Jogadores" EntitySet="Jogadores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Escalacoes_Partidas" Association="Self.FK_Escalacoes_Partidas">
+            <End Role="Partidas" EntitySet="Partidas" />
+            <End Role="Escalacoes" EntitySet="Escalacoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partidas_Times" Association="Self.FK_Partidas_Times">
+            <End Role="Times" EntitySet="Times" />
+            <End Role="Partidas" EntitySet="Partidas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partidas_Times1" Association="Self.FK_Partidas_Times1">
+            <End Role="Times" EntitySet="Times" />
+            <End Role="Partidas" EntitySet="Partidas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partidas_Torneios" Association="Self.FK_Partidas_Torneios">
+            <End Role="Torneios" EntitySet="Torneios" />
+            <End Role="Partidas" EntitySet="Partidas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Escalacoes_Times" Association="Self.FK_Escalacoes_Times">
+            <End Role="Times" EntitySet="Times" />
+            <End Role="Escalacoes" EntitySet="Escalacoes" />
+          </AssociationSet>
+          <AssociationSet Name="Torneios_Times" Association="Self.Torneios_Times">
+            <End Role="Times" EntitySet="Times" />
+            <End Role="Torneios" EntitySet="Torneios" />
+          </AssociationSet>
+          <AssociationSet Name="usuarios_torneios" Association="Self.usuarios_torneios">
+            <End Role="Torneios" EntitySet="Torneios" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TorneioModelStoreContainer" CdmEntityContainer="TorneioEntities">
+          <EntitySetMapping Name="Jogadores">
+            <EntityTypeMapping TypeName="TorneioModel.Jogadores">
+              <MappingFragment StoreEntitySet="Jogadores">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Idade" ColumnName="Idade" />
+                <ScalarProperty Name="Nacionalidade" ColumnName="Nacionalidade" />
+                <ScalarProperty Name="DataNascimento" ColumnName="DataNascimento" />
+                <ScalarProperty Name="IDTime" ColumnName="IDTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Partidas">
+            <EntityTypeMapping TypeName="TorneioModel.Partidas">
+              <MappingFragment StoreEntitySet="Partidas">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="IDTorneio" ColumnName="IDTorneio" />
+                <ScalarProperty Name="IDTime1" ColumnName="IDTime1" />
+                <ScalarProperty Name="IDTime2" ColumnName="IDTime2" />
+                <ScalarProperty Name="Rodada" ColumnName="Rodada" />
+                <ScalarProperty Name="PlacarTime1" ColumnName="PlacarTime1" />
+                <ScalarProperty Name="PlacarTime2" ColumnName="PlacarTime2" />
+                <ScalarProperty Name="DataHora" ColumnName="DataHora" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Times">
+            <EntityTypeMapping TypeName="TorneioModel.Times">
+              <MappingFragment StoreEntitySet="Times">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Emblema" ColumnName="Emblema" />
+                <ScalarProperty Name="Sigla" ColumnName="Sigla" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Torneios">
+            <EntityTypeMapping TypeName="TorneioModel.Torneios">
+              <MappingFragment StoreEntitySet="Torneios">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Premiacao" ColumnName="Premiacao" />
+                <ScalarProperty Name="Ano" ColumnName="Ano" />
+                <ScalarProperty Name="Realizador" ColumnName="Realizador" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="TorneioModel.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Senha" ColumnName="Senha" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+                <ScalarProperty Name="Ativo" ColumnName="Ativo" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Sobrenome" ColumnName="Sobrenome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Escalacoes">
+            <EntityTypeMapping TypeName="TorneioModel.Escalacoes">
+              <MappingFragment StoreEntitySet="Escalacoes">
+                <ScalarProperty Name="IDTime" ColumnName="IDTime" />
+                <ScalarProperty Name="IDPartida" ColumnName="IDPartida" />
+                <ScalarProperty Name="IDJogador" ColumnName="IDJogador" />
+                <ScalarProperty Name="Titular" ColumnName="Titular" />
+                <ScalarProperty Name="Posicao" ColumnName="Posicao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Torneios_Times" TypeName="TorneioModel.Torneios_Times" StoreEntitySet="Torneios_Times">
+            <EndProperty Name="Times">
+              <ScalarProperty Name="ID" ColumnName="IDTime" />
+            </EndProperty>
+            <EndProperty Name="Torneios">
+              <ScalarProperty Name="ID" ColumnName="IDTorneio" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="usuarios_torneios" TypeName="TorneioModel.usuarios_torneios" StoreEntitySet="usuarios_torneios">
+            <EndProperty Name="Torneios">
+              <ScalarProperty Name="ID" ColumnName="IDTorneio" />
+            </EndProperty>
+            <EndProperty Name="Usuarios">
+              <ScalarProperty Name="ID" ColumnName="IDUsuario" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

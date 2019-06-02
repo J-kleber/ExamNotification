@@ -1,0 +1,49 @@
+﻿@model Torneio.model.Times
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Excluir</h2>
+
+<h3>Você deseja realmente excluir este time ?</h3>
+<div>
+    <h4>Times</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Emblema)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Emblema)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sigla)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sigla)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Excluir" class="btn btn-danger" />
+        <br />
+        @Html.ActionLink("Voltar a lista", "Index")
+    </div>
+    }
+</div>

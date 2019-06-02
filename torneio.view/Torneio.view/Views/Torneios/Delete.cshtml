@@ -1,0 +1,58 @@
+﻿@model Torneio.model.Torneios
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Excluir</h2>
+
+<h3>Você tem certeza que deseja excluir este torneio?</h3>
+<div>
+    <h4>Torneios</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Premiacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Premiacao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ano)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ano)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Realizador)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Realizador)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-danger" /> 
+        <br />
+        @Html.ActionLink("Voltar a lista", "Index")
+    </div>
+    }
+</div>

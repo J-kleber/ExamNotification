@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Torneio.model.Jogadores>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Jogadores</h2>
+
+<p>
+    @Html.ActionLink("Adicionar Novo", "Create", new { id = "" }, htmlAttributes: new { @class = "btn  btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Idade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nacionalidade)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataNascimento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Times.Nome)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Idade)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nacionalidade)
+        </td>
+        <td>
+            @{ 
+                string dataNascimento = item.DataNascimento.ToShortDateString();
+            }
+               @dataNascimento
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Times.Nome)
+        </td>
+        <td>
+            @Html.ActionLink("Editar", "Edit", new { id=item.ID }, htmlAttributes: new { @class = "btn btn-warning" }) |
+            @Html.ActionLink("Detalhes", "Details", new { id=item.ID }, htmlAttributes: new { @class = "btn btn-success" }) |
+            @Html.ActionLink("Excluir", "Delete", new { id=item.ID }, htmlAttributes: new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>
